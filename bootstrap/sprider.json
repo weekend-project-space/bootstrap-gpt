@@ -1,0 +1,10 @@
+{
+    "author": "ruidong",
+    "date": "2023-04-17",
+    "version": "0.1",
+    "description": "ppt 引导助手",
+    "boot": [{
+        "o": "请输入主题",
+        "t": "spider:https://zh.wikipedia.org/wiki/{{r0}}:select=.infobox"
+    }]
+}
