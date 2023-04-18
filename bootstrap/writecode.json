@@ -2,20 +2,20 @@
     "author": "ruidong",
     "date": "2023-04-17",
     "version": "0.1",
-    "description": "code 引导助手",
+    "description": "code boot",
     "boot": [{
-            "w": "你好 这是一个code模板 请选择模板 1.simple 2.demo",
+            "w": "Hello, this is a code template. Please select template 1. simple 2. demo",
             "b": {
                 "1": 1,
                 "2": 2
             }
         },
         {
-            "w": "请输入语言类型"
+            "w": "Please enter the language type"
         },
         {
-            "w": "请输入需求",
-            "p": "chat:写一个{{r2}}的{{r1}}程序"
+            "w": "Please enter the requirement",
+            "p": "chat:Write a {{r2}} program for {{r1}}"
         }
     ]
 }

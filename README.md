@@ -4,6 +4,8 @@
 
 ![bootstrap-gpt](./doc/screen.png)
 
+[cn](./README-CN.md)
+
 ## download
 
 ## set api key
@@ -40,7 +42,7 @@ python3 ./main.py
             }
         },
         {
-            "w": "Please enter the language type",
+            "w": "Please enter the language type"
         },
         {
             "w": "Please enter the requirement",
@@ -56,8 +58,6 @@ python3 ./main.py
 
 -P: prompt supports template variable micro instructions for guiding chatgt [chat:] to search for plain text or crawler [spider:] output, which can expand more micro instruction prompt guidance
 
-
 r2 r1 is a variable with a name of type and an index of r: reader w: writer p: prompts m: msg
-
 
 Generate Rule Reference [interpreter.py](./interpreter.py)
