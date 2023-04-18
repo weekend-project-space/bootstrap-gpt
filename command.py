@@ -4,7 +4,7 @@ from interpreter import handler
 
 
 class Command(cmd.Cmd):
-    prompt = '> '
+    prompt = '\033[34m>\033[0m '
 
     def __init__(self, config, completekey='tab', stdin=None, stdout=None):
         super().__init__(completekey=completekey, stdin=stdin, stdout=stdout)
@@ -12,7 +12,8 @@ class Command(cmd.Cmd):
         self.io = IOHolder(self.stdin, self.stdout, Command.prompt)
 
     def preloop(self):
-        self.io.print('Welcome to WeBootstrap GPT\nsample > use ppt \n')
+        self.io.print('\033[34mWelcome to WeBootstrap GPT\033[0m\
+                       \n\033[35msample > use friend\033[0m \n')
 
     def do_ls(self, arg):
         boots = self.config.keys()
@@ -20,9 +21,12 @@ class Command(cmd.Cmd):
             self.io.println(b)
 
     def do_use(self, arg):
-        boot = self.config[arg]['boot']
-        self.io.println(handler(boot, self.io))
-        self.io.println('bye '+arg+'!')
+        if arg in self.config:
+            boot = self.config[arg]['boot']
+            self.io.println(handler(boot, self.io))
+            self.io.println('bye '+arg+'!')
+        else:
+            self.io.println('\033[31mnot found bootstarap: '+arg+'!\033[0m ')
 
     def do_chat(self, arg):
         self.io.println('chat, {}'.format(gpt_agent(arg)))

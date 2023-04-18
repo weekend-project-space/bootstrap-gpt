@@ -14,7 +14,7 @@ def handler(boot, io, index=0, input='', collect={}):
     if out:
         content = render(out, collect)
         collect['w'+str(index)] = content
-        io.print(content+'\n> ')
+        io.print(content+'\n\033[34m>\033[0m ')
         msg = io.readline()
         if not len(msg):
             msg = 'EOF'
