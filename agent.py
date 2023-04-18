@@ -40,9 +40,22 @@ def gpt_agent(content):
     return result
 
 
-def decrease(num, env, key):
-    v = int(num)-1
+def decrease(env, key):
+    v = int(env[key])-1
     env[key] = v
+    return v
+
+
+def increase(env, key):
+    v = int(env[key])+1
+    env[key] = v
+    return v
+
+
+def set(env, exp):
+    kv = exp.split('=')
+    v = env[kv[1].trim()]
+    env[kv[0].trim()] = v
     return v
 
 
@@ -56,7 +69,10 @@ def agent(content, env, prompt):
     elif agentName == 'spider':
         return spider(promp)
     elif agentName == '-':
-        key = prompt[2:].replace('{{', '').replace('}}', '')
-        return decrease(promp, env, key)
+        return decrease(env, promp)
+    elif agentName == '+':
+        return increase(env, promp)
+    elif agentName == 'set!':
+        return set(env, promp)
     else:
         return promp
