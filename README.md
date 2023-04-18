@@ -2,8 +2,6 @@
 
 > Guide GPT to help you efficiently complete various tasks, write GPT prompts programs, and automate GPT prompts
 
-> 引导 gpt 帮你高效完成各种事情, 写 gpt prompts 程序，gpt prompts 自动化
-
 ![bootstrap-gpt](./doc/screen.png)
 
 ## download
@@ -33,29 +31,33 @@ python3 ./main.py
     "author": "ruidong",
     "date": "2023-04-17",
     "version": "0.1",
-    "description": "code 引导助手",
+    "description": "code boot",
     "boot": [{
-            "w": "你好 这是一个code模板 请选择模板 1.simple 2.demo",
+            "w": "Hello, this is a code template. Please select template 1. simple 2. demo",
             "b": {
                 "1": 1,
                 "2": 2
             }
         },
         {
-            "w": "请输入语言类型",
+            "w": "Please enter the language type",
         },
         {
-            "w": "请输入需求",
-            "p": "chat:写一个{{r2}}的{{r1}}程序"
+            "w": "Please enter the requirement",
+            "p": "chat:Write a {{r2}} program for {{r1}}"
         }
     ]
 }
 ```
 
-- w: write 支持模板变量
-- b: branch 分支 支持 Object 字段 eq 跳转 和 Array 循序执行 或 无继续往下执行
-- p: prompt 支持模板变量 微指令 用于引导 chatgpt[chat:] 给其文案 或 爬虫[sprider:]搜索 纯文本[text:]输出， 可以扩展更多微指令提示引导
+-W: write supports template variables
 
-r2 r1 为变量名称 为类型+index 索引 有 r：reader w:writer p:prompts m:msg 之分
+-B: Branch branch supports object field eq jump and Array sequential execution or no further execution
 
-生成规则参考[interpreter.py](./interpreter.py)
+-P: prompt supports template variable micro instructions for guiding chatgt [chat:] to search for plain text or crawler [spider:] output, which can expand more micro instruction prompt guidance
+
+
+r2 r1 is a variable with a name of type and an index of r: reader w: writer p: prompts m: msg
+
+
+Generate Rule Reference [interpreter.py](./interpreter.py)
