@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 from utils.file import readfile
 from utils.env import parse
 
-
+env = parse(readfile('.env'))
 # 设置 OpenAI API 密钥
-openai.api_key = parse(readfile('.env'))['api_key']
+openai.api_key = env['api_key']
+openai.api_base = env['api_base']
 
 
 def spider(query):
@@ -39,15 +40,23 @@ def gpt_agent(content):
     return result
 
 
-def agent(content):
+def decrease(num, env, key):
+    v = int(num)-1
+    env[key] = v
+    return v
+
+
+def agent(content, env, prompt):
     index = content.find(':')
     agentName = content[:index]
-    promt = content[index+1:]
+    promp = content[index+1:]
     # print(str(index)+agentName+'---' + promt)
     if agentName == 'chat':
-        return gpt_agent(promt)
+        return gpt_agent(promp)
+    elif agentName == 'spider':
+        return spider(promp)
+    elif agentName == '-':
+        key = prompt[2:].replace('{{', '').replace('}}', '')
+        return decrease(promp, env, key)
     else:
-        if agentName == 'spider':
-            return spider(promt)
-        else:
-            return promt
+        return promp
