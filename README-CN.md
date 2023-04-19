@@ -1,6 +1,6 @@
 # bootstrap-gpt
 
-> 引导 gpt 帮你高效完成各种事情, 写 gpt prompts 程序，gpt prompts 自动化
+> 引导 gpt 帮你高效完成各种事情，可以联网，支持prompts编排，没有完全auto更多自定义空间，自己编排任务流
 
 ![bootstrap-gpt](./doc/demo.gif)
 ![bootstrap-gpt](./doc/screen_cn.png)
