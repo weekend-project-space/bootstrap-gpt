@@ -2,6 +2,7 @@
 
 > 引导 gpt 帮你高效完成各种事情, 写 gpt prompts 程序，gpt prompts 自动化
 
+![bootstrap-gpt](./doc/demo.gif)
 ![bootstrap-gpt](./doc/screen_cn.png)
 
 ## 下载

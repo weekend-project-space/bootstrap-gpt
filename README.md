@@ -2,6 +2,8 @@
 
 > Guide GPT to help you efficiently complete various tasks, write GPT prompts programs, and automate GPT prompts
 
+![bootstrap-gpt](./doc/demo.gif)
+
 ![bootstrap-gpt](./doc/screen.png)
 
 [cn](./README-CN.md)
