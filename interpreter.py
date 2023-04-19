@@ -13,14 +13,19 @@ def handler(boot, io, index=0, input='', collect={}):
 
     if out:
         content = render(out, collect)
-        collect['w'+str(index)] = content
-        io.print(content+'\n\033[34m>\033[0m ')
-        msg = io.readline()
-        if not len(msg):
-            msg = 'EOF'
+        if content.find('notr:') == 0:
+            content = content[5:]
+            collect['w'+str(index)] = content
+            io.println(content)
         else:
-            msg = msg.rstrip('\r\n')
-            collect['r'+str(index)] = msg
+            collect['w'+str(index)] = content
+            io.print(content+'\n\033[34m>\033[0m ')
+            msg = io.readline()
+            if not len(msg):
+                msg = 'EOF'
+            else:
+                msg = msg.rstrip('\r\n')
+                collect['r'+str(index)] = msg
     else:
         collect['r'+str(index)] = msg
 

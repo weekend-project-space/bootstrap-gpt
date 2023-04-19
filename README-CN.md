@@ -19,7 +19,7 @@ api_key=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 cd bootstrap-gpt
 
-pip install openai && pip install beautifulsoup4
+pip install openai && pip install beautifulsoup4 && pip install jsonpath && pip install jinja2
 
 python3 ./main.py
 ```

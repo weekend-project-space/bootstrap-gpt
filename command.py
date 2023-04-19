@@ -23,7 +23,7 @@ class Command(cmd.Cmd):
     def do_use(self, arg):
         if arg in self.config:
             boot = self.config[arg]['boot']
-            self.io.println(handler(boot, self.io))
+            handler(boot, self.io)
             self.io.println('bye '+arg+'!')
         else:
             self.io.println('\033[31mnot found bootstarap: '+arg+'!\033[0m ')
@@ -44,7 +44,12 @@ class IOHolder:
         self.prompt = prompt
 
     def println(self, o):
-        self.stdout.write(o)
+        if isinstance(o, list):
+            for i in o:
+                self.stdout.write(i)
+                self.stdout.write('\n')
+        else:
+            self.stdout.write(o)
         self.stdout.write('\n')
         self.stdout.flush()
 
