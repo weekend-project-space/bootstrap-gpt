@@ -18,7 +18,9 @@ class Command(cmd.Cmd):
     def do_ls(self, arg):
         boots = self.config.keys()
         for b in boots:
-            self.io.println(b)
+            self.io.print(b)
+            self.io.print(' :  ')
+            self.io.println(self.config[b]['description'])
 
     def do_use(self, arg):
         if arg in self.config:
