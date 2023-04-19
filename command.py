@@ -12,7 +12,7 @@ class Command(cmd.Cmd):
         self.io = IOHolder(self.stdin, self.stdout, Command.prompt)
 
     def preloop(self):
-        self.io.print('\033[34mWelcome to WeBootstrap GPT\033[0m\
+        self.io.print('\033[34mWelcome to Bootstrap GPT\033[0m\
                        \n\033[35msample > use friend\033[0m \n')
 
     def do_ls(self, arg):
