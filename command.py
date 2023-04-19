@@ -31,7 +31,7 @@ class Command(cmd.Cmd):
             self.io.println('\033[31mnot found bootstarap: '+arg+'!\033[0m ')
 
     def do_chat(self, arg):
-        self.io.println('chat, {}'.format(gpt_agent(arg)))
+        self.io.println('chat: {}'.format(gpt_agent(arg)))
 
     def do_exit(self, arg):
         self.io.println('Exiting...')
