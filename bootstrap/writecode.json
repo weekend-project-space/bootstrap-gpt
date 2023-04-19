@@ -16,6 +16,9 @@
         {
             "w": "Please enter the requirement",
             "p": "chat:Write a {{r2}} program for {{r1}}"
+        },
+        {
+            "w": "notr:{{m2}}"
         }
     ]
 }
