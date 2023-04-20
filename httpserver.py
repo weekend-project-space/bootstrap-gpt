@@ -1,4 +1,4 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import SimpleHTTPRequestHandler, HTTPServer
 import json
 from agent import gpt_agent
 from interpreter import handler
@@ -20,11 +20,17 @@ class Env:
 env = Env('', {}, 0)
 
 
-class RequestHandler(BaseHTTPRequestHandler):
+class RequestHandler(SimpleHTTPRequestHandler):
 
-    def handler(self):
-        print("data:", self.rfile.readline().decode())
-        self.wfile.write(self.rfile.readline())
+    def _cors_header(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', '*')
+        self.send_header('Access-Control-Allow-Headers', '*')
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self._cors_header()
+        self.end_headers()
 
     def do_GET(self):
         if self.path == '/favicon.ico':
@@ -34,16 +40,38 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "application/json; charset=utf-8")
         self.end_headers()
-        data = {'data': interpreter(params['msg'], env)}
+        res = interpreter(params['msg'], env)
+        data = {'data': res}
         self.wfile.write(json.dumps(data, ensure_ascii=False)
                          .encode('utf-8'))
 
     def do_POST(self):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
+        self._cors_header()
         self.end_headers()
         req_datas = self.rfile.read(int(self.headers['content-length']))
-        data = {'data': interpreter(req_datas['msg'], env)}
+
+        if self.path.find('/v1/chat/completions') == 0:
+            req = json.loads(req_datas)['messages'][0]['content']
+            res = interpreter(req.replace('\n', ''), env)
+            print(len(res))
+            if isinstance(res, list):
+                if len(res) < 3:
+                    res = "  \n".join(res)
+                else:
+                    res = "  \n - ".join(res)
+                    res = ' - '+res
+            data = {"choices": [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "content": res
+                    }
+                }]}
+        else:
+            res = interpreter(req_datas['msg'], env)
+            data = {'data': res}
         self.wfile.write(json.dumps(data).encode('utf-8'))
 
 
@@ -115,12 +143,9 @@ class Writer:
         return 'hello world'
 
 
-
-
-
 def startserver(config0):
     global config
     config = config0
-    server = HTTPServer(('localhost', 8080), RequestHandler)
-    print('HTTP Server running on port 8080')
+    server = HTTPServer(('localhost', PORT), RequestHandler)
+    print('HTTP Server running on port {}'.format(PORT))
     server.serve_forever()
