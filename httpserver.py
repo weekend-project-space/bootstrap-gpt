@@ -8,7 +8,17 @@ from utils.parse import parse
 PORT = 8080
 
 config = {}
-collect = {}
+
+
+class Env:
+    def __init__(self, bootName, env, index) -> None:
+        self.bootName = bootName
+        self.env = env
+        self.index = index
+
+
+env = Env('', {}, 0)
+
 
 class RequestHandler(BaseHTTPRequestHandler):
 
@@ -17,56 +27,95 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(self.rfile.readline())
 
     def do_GET(self):
-        self.query = self.path.split('?', 1)[1]
+        if self.path == '/favicon.ico':
+            return
+        self.query = self.path.split('?')[1]
         params = parse(self.query, '&')
         self.send_response(200)
         self.send_header("Content-type", "application/json; charset=utf-8")
         self.end_headers()
-        response = {'data': handler0(params['msg'],
-                    params['bootname'] if 'bootname' in params else None,
-                    int(params['index']) if 'index' in params else 0, collect)}
-        self.wfile.write(json.dumps(response, ensure_ascii=False)
+        data = {'data': interpreter(params['msg'], env)}
+        self.wfile.write(json.dumps(data, ensure_ascii=False)
                          .encode('utf-8'))
 
     def do_POST(self):
-        print(self.headers)
-        print(self.command)
-        req_datas = self.rfile.read(int(self.headers['content-length']))
-        print(req_datas.decode())
-        data = {
-            'result_code': '2',
-            'result_desc': 'Success',
-            'timestamp': '',
-            'data': {'message_id': '25d55ad283aa400af464c76d713c07ad'}
-        }
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
+        req_datas = self.rfile.read(int(self.headers['content-length']))
+        data = {'data': interpreter(req_datas['msg'], env)}
         self.wfile.write(json.dumps(data).encode('utf-8'))
 
 
-def handler0(msg, bootName, index, env):
+def interpreter(msg, env):
     # print(bootName, index, env)
-    if msg == 'ls':
+    if msg == 'exit':
+        restEnv()
+        return 'bye!'
+    elif msg == 'ls':
         boots = config.keys()
-        str = ''
+        res = []
         for b in boots:
-            str += '{} :  {} \n '.format(b, config[b]['description'])
-        return str
+            res.append('{} :  {} '.format(b, config[b]['description']))
+        return res
     elif msg in config:
-        env['w'] = []
-        handler(config[msg]['boot'], input=msg, collect=env,
-                interrupt=True)
-        print('---', env['index'])
-        return env['w']
-    elif bootName in config:
-        env['w'] = []
-        handler(config[bootName]['boot'], None, index, msg, env,
-                skipout=True)
-        print(env['index'])
-        return env['w']
+        restEnv()
+        writer = Writer()
+        handler(config[msg]['boot'], writer, input=msg, collect=env.env,
+                interruptRead=True)
+        env.index = env.env['index']
+        env.bootName = msg
+        if 'exit' in env.env:
+            bootName = env.bootName
+            restEnv()
+            return 'bye ' + bootName + '!'
+        else:
+            return writer.content
+    elif env.bootName in config:
+        writer = Writer()
+        handler(config[env.bootName]['boot'], writer, env.index, msg, env.env,
+                skipWR=True, interruptRead=True)
+        env.index = env.env['index']
+        if 'exit' in env.env:
+            bootName = env.bootName
+            restEnv()
+            return 'bye ' + bootName + '!'
+        else:
+            return writer.content
     else:
         return gpt_agent(msg)
+
+
+def restEnv():
+    env.bootName = ''
+    env.env = {}
+    env.index = 0
+
+
+class Writer:
+
+    def __init__(self) -> None:
+        self.content = []
+
+    def println(self, o):
+        if isinstance(o, list):
+            for i in o:
+                self.content.append(i)
+        else:
+            self.content.append(o)
+
+    def print(self, o):
+        if isinstance(o, list):
+            for i in o:
+                self.content.append(i)
+        else:
+            self.content.append(o)
+
+    def readline(self):
+        return 'hello world'
+
+
+
 
 
 def startserver(config0):

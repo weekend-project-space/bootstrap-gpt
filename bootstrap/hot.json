@@ -2,9 +2,9 @@
     "author": "ruidong",
     "date": "2023-04-19",
     "version": "0.1",
-    "description": "查看v2最近热门帖子讲了什么",
+    "description": "查看webfollow最近热门帖子讲了什么",
     "boot": [{
-            "p": "spider:https://api.webfollow.cc/api/channels/articles?query=&page=0&size=20&sort=channel,desc&id=rsshub.app%2Fv2ex%2Ftopics%2Fhot:jsonpath=$.content[*]"
+            "p": "spider:https://api.webfollow.cc/api/articles?source=EXPLORE&size=20&sort=channel,desc:jsonpath=$.content[*]"
         },
         {
             "p": "len:m0"
@@ -25,9 +25,7 @@
             "r": "r5",
             "p": "spider:https://api.webfollow.cc/api/articles/{{m0[(r5|int)-1].id}}:jsonpath=$.description"
         }, {
-            "p": "chat:用20字总结一下{{m5[0]}}"
-        }, {
-            "w": "{{m5[0]}} \n\n总结:{{m6}}",
+            "w": "{{m5[0]}} ",
             "b": [5]
         }
     ]
