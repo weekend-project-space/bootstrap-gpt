@@ -5,11 +5,13 @@
     "description": "总结网页",
     "boot": [{
         "w": "请输入网址",
+        "r": "r0",
         "p": "spider:{{r0}}:select=.entry-content p"
     }, {
         "p": "chat:总结一下这个页面介绍了什么{{m0}}"
     }, {
         "w": "总结: {{m1}} \n还要总结其他网页吗? y/n",
+        "r": "r2",
         "b": {
             "y": 0,
             "n": -1

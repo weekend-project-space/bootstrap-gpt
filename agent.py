@@ -2,11 +2,12 @@ import openai
 import requests
 from bs4 import BeautifulSoup
 from utils.file import readfile
-from utils.env import parse
+from utils.parse import parse
 from utils.json import to_obj
 from jsonpath import jsonpath
 
 env = parse(readfile('.env'))
+# print(env)
 # 设置 OpenAI API 密钥
 openai.api_key = env['api_key']
 openai.api_base = env['api_base']
@@ -36,6 +37,7 @@ def spider(query):
 
 
 def gpt_agent(content):
+    # print(content)
     # 创建 OpenAI GPT 对象
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",

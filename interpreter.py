@@ -5,29 +5,26 @@ from utils.templateEngine import render
 # w:write p:prompt b:branch Array next, Obj switch
 def handler(boot, io, index=0, input='', collect={}):
     inst = boot[index]
-    out = inst['w'] if 'w' in inst else None
+    write = inst['w'] if 'w' in inst else None
+    read = inst['r'] if 'r' in inst else None
     prompt = inst['p'] if 'p' in inst else None
     branch = inst['b'] if 'b' in inst else None
     msg = input
     size = len(boot)
 
-    if out:
-        content = render(out, collect)
-        if content.find('notr:') == 0:
-            content = content[5:]
-            collect['w'+str(index)] = content
-            io.println(content)
-        else:
-            collect['w'+str(index)] = content
-            io.print(content+'\n\033[34m>\033[0m ')
-            msg = io.readline()
-            if not len(msg):
-                msg = 'EOF'
-            else:
-                msg = msg.rstrip('\r\n')
-                collect['r'+str(index)] = msg
+    if write:
+        content = render(write, collect)
+        collect['w'+str(index)] = content
+        io.println(content)
     else:
+        pass
+
+    if read:
+        io.print('\033[34m>\033[0m ')
+        msg = io.readline()
         collect['r'+str(index)] = msg
+    else:
+        collect['r'+str(index)] = input
 
     if prompt:
         content = render(prompt, collect)

@@ -5,6 +5,7 @@
     "description": "wiki 引导助手",
     "boot": [{
         "w": "请输入主题",
+        "r": "r0",
         "p": "spider:https://zh.wikipedia.org/wiki/{{r0}}:select=.infobox"
     }]
 }

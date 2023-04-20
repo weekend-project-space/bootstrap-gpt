@@ -1,5 +1,5 @@
-def parse(str):
-    array = str.split('\n')
+def parse(str, splitKey='\n'):
+    array = str.split(splitKey)
     result = {}
     for line in array:
         if '=' in line:

@@ -4,17 +4,15 @@
     "version": "0.1",
     "description": "code boot",
     "boot": [{
-            "w": "Hello, this is a code template. Please select template 1. simple 2. demo",
-            "b": {
-                "1": 1,
-                "2": 2
-            }
+            "w": "Hello, this is a code template. "
         },
         {
-            "w": "Please enter the language type"
+            "w": "Please enter the language type",
+            "r": "r1"
         },
         {
             "w": "Please enter the requirement",
+            "r": "r2",
             "p": "chat:Write a {{r2}} program for {{r1}}"
         },
         {
