@@ -41,7 +41,7 @@ res
 {"choices": [{"message": {"role": "assistant", "content": "hello"}]}
 ```
 
-配合 https://github.com/weekend-project-space/chatgpt-online 食用效果更佳
+coordination https://github.com/weekend-project-space/chatgpt-online Better eating effect
 
 ## bootstrap simple
 
