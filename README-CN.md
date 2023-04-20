@@ -1,6 +1,6 @@
 # bootstrap-gpt
 
-> 引导 gpt 帮你高效完成各种事情，可以联网，支持prompts编排，没有完全auto更多自定义空间，自己编排任务流
+> 引导 gpt 帮你高效完成各种事情，可以联网，支持 prompts 编排，没有完全 auto 更多自定义空间，自己编排任务流
 
 ![bootstrap-gpt](./doc/demo.gif)
 ![bootstrap-gpt](./doc/screen_cn.png)
@@ -24,6 +24,21 @@ pip install openai && pip install beautifulsoup4 && pip install jsonpath && pip 
 
 python3 ./main.py
 ```
+
+## api
+
+```
+post /v1/chat/completions
+{"messages":[{"role":"user","content":"v2-hot"}],"model":"gpt-3.5-turbo"}
+```
+
+res
+
+```
+{"choices": [{"message": {"role": "assistant", "content": "hello"}]}
+```
+
+配合 https://github.com/weekend-project-space/chatgpt-online 食用效果更佳
 
 ## 引导示例
 

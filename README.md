@@ -1,6 +1,6 @@
 # bootstrap-gpt
 
-> Guide GPT to help you efficiently complete various tasks, write GPT prompts programs, and automate GPT prompts
+> Guide GPT to help you efficiently complete various tasks, write GPT prompts programs, and automate GPT prompts, support web api
 
 ![bootstrap-gpt](./doc/demo.gif)
 
@@ -27,6 +27,21 @@ pip install openai && pip install beautifulsoup4 && pip install jsonpath && pip 
 
 python3 ./main.py
 ```
+
+## api
+
+```
+post /v1/chat/completions
+{"messages":[{"role":"user","content":"v2-hot"}],"model":"gpt-3.5-turbo"}
+```
+
+res
+
+```
+{"choices": [{"message": {"role": "assistant", "content": "hello"}]}
+```
+
+配合 https://github.com/weekend-project-space/chatgpt-online 食用效果更佳
 
 ## bootstrap simple
 
