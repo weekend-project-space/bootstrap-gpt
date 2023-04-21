@@ -2,7 +2,7 @@
 
 > 引导 gpt 帮你高效完成各种事情，可以联网，支持 prompts 编排，没有完全 auto 更多自定义空间，自己编排任务流
 
-![bootstrap-gpt](./doc/demo.gif)
+![bootstrap-gpt](./doc/gpt-online-demo.gif)
 ![bootstrap-gpt](./doc/screen_cn.png)
 
 ## 下载

@@ -2,7 +2,7 @@
 
 > Guide GPT to help you efficiently complete various tasks, write GPT prompts programs, and automate GPT prompts, support web api
 
-![bootstrap-gpt](./doc/demo.gif)
+![bootstrap-gpt](./doc/gpt-online-demo.gif)
 
 ![bootstrap-gpt](./doc/screen.png)
 
