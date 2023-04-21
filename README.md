@@ -35,14 +35,19 @@ python3 ./main.py
 ## http server
 
 ```
-> python3 ./main.py
+> python3 main.py
 
-Welcome to Bootstrap GPT
+Bootstrap GPT
 sample > use summarize
 
 > serve
 
-HTTP Server running on port 8080
+
+BootStrap-GPT server v1.0.0
+
+➜ Api: http://localhost:9981/v1/chat/completions
+➜ Web: https://weekendproject.space/chat-gpt-online
+
 ```
 
 **api**
