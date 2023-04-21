@@ -25,7 +25,7 @@
             "r": "r5",
             "p": "spider:https://api.webfollow.cc/api/articles/{{m0[(r5|int)-1].id}}:tojson"
         }, {
-            "w": "{{m5['description']}} \n   <a href='{{m5['link']}}' target='_blank'>查看原文</a> \n  ",
+            "w": "<h1>{{m5['title']}}</h1> \n <small>{{m5['channelName']}}  {{m5['pubDateTime']}}</small>  \n  \n  {{m5['description']}} \n   <a href='{{m5['link']}}' target='_blank'>查看原文</a> \n  ",
             "b": [5]
         }
     ]
