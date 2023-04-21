@@ -31,7 +31,7 @@ python3 ./main.py
 > python3 ./main.py
 
 Welcome to Bootstrap GPT
-sample > use server
+sample > use summarize
 
 > server
 
