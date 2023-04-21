@@ -38,7 +38,7 @@ python3 ./main.py
 > python3 main.py serve
 
 
-BootStrap-GPT server v1.0.0
+Bootstrap-GPT server v1.0.0
 
 ➜ Api: http://localhost:9981/v1/chat/completions
 ➜ Web: https://weekendproject.space/chat-gpt-online
