@@ -31,6 +31,11 @@ def spider(query):
         path = arr[1]
         res = requests.get(url, headers=headers)
         return jsonpath(to_obj(res.text), path)
+    elif query.find(':tojson') > 0:
+        arr = query.split(':tojson')
+        url = arr[0]
+        res = requests.get(url, headers=headers)
+        return to_obj(res.text)
     else:
         v = requests.get(url, headers=headers)
         return v.text
