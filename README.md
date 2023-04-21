@@ -6,7 +6,9 @@
 
 ![bootstrap-gpt](./doc/screen.png)
 
-[cn](./README-CN.md)
+## translate
+
+[中文](./README-CN.md)
 
 ## download
 
@@ -56,7 +58,9 @@ res
 {"choices": [{"message": {"role": "assistant", "content": "hello"}]}
 ```
 
-coordination [chat-gpt-online](https://weekendproject.space/chat-gpt-online.html) Better eating effect or
+coordination [chat-gpt-online](https://weekendproject.space/chat-gpt-online.html) Better eating effect
+
+> Note that you need to set an api-key (xxx is enough)
 
 ## bootstrap simple
 
