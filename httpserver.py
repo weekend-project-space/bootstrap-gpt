@@ -146,6 +146,6 @@ class Writer:
 def startserver(config0):
     global config
     config = config0
-    server = HTTPServer(('localhost', PORT), RequestHandler)
+    server = HTTPServer(('0.0.0.0', PORT), RequestHandler)
     print('HTTP Server running on port {}'.format(PORT))
     server.serve_forever()
