@@ -37,7 +37,7 @@ def spider(query):
 
 
 def gpt_agent(content):
-    print(content)
+    # print(content)
     # 创建 OpenAI GPT 对象
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",

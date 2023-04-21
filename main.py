@@ -1,7 +1,7 @@
 from command import Command
 from utils.file import listdir
 from utils.json import read_file_to_json
-from httpserver import startserver
+
 
 def loadConfig():
     path = "bootstrap"
@@ -14,6 +14,4 @@ def loadConfig():
 
 
 if __name__ == '__main__':
-    startserver(loadConfig())
-    # print(loadConfig())
-    # Command(loadConfig()).cmdloop()
+    Command(loadConfig()).cmdloop()

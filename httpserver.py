@@ -4,9 +4,6 @@ from agent import gpt_agent
 from interpreter import handler
 from utils.parse import parse
 
-
-PORT = 8080
-
 config = {}
 
 
@@ -143,9 +140,9 @@ class Writer:
         return 'hello world'
 
 
-def startserver(config0):
+def startserver(config0, port):
     global config
     config = config0
-    server = HTTPServer(('0.0.0.0', PORT), RequestHandler)
-    print('HTTP Server running on port {}'.format(PORT))
+    server = HTTPServer(('0.0.0.0', port), RequestHandler)
+    print('HTTP Server running on port {}'.format(port))
     server.serve_forever()

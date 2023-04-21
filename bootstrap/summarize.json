@@ -6,7 +6,7 @@
     "boot": [{
         "w": "请输入网址",
         "r": "r0",
-        "p": "spider:{{r0}}:select=.entry-content p"
+        "p": "spider:{{r0}}:select=article"
     }, {
         "p": "chat:总结一下这个页面介绍了什么{{m0}}"
     }, {

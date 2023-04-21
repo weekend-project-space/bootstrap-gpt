@@ -1,6 +1,11 @@
 import cmd
 from agent import gpt_agent
 from interpreter import handler
+from httpserver import startserver
+from utils.file import readfile
+from utils.parse import parse
+
+env = parse(readfile('.env'))
 
 
 class Command(cmd.Cmd):
@@ -29,6 +34,9 @@ class Command(cmd.Cmd):
             self.io.println('bye '+arg+'!')
         else:
             self.io.println('\033[31mnot found bootstarap: '+arg+'!\033[0m ')
+
+    def do_server(self, arg):
+        startserver(self.config, int(env['server_port']))
 
     def do_chat(self, arg):
         self.io.println('chat: {}'.format(gpt_agent(arg)))
