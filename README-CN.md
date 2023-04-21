@@ -33,8 +33,7 @@ python3 ./main.py
 Welcome to Bootstrap GPT
 sample > use summarize
 
-> server
-
+> serve
 HTTP Server running on port 8080
 ```
 
@@ -51,7 +50,7 @@ res
 {"choices": [{"message": {"role": "assistant", "content": "hello"}]}
 ```
 
-配合 https://github.com/weekend-project-space/chatgpt-online 食用效果更佳
+配合 [chat-gpt-online](https://weekendproject.space/chat-gpt-online.html) 食用效果更佳
 
 ## 引导示例
 

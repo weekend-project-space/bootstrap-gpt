@@ -52,7 +52,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
         if self.path.find('/v1/chat/completions') == 0:
             req = json.loads(req_datas)['messages'][0]['content']
             res = interpreter(req.replace('\n', ''), env)
-            print(len(res))
+            # print(len(res))
             if isinstance(res, list):
                 if len(res) < 3:
                     res = "  \n".join(res)

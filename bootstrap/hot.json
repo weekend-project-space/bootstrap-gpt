@@ -13,7 +13,7 @@
             "p": "len:m0"
         },
         {
-            "w": "{{m2 - m1 + 1}} {{(m0[m2-m1])['title']}}",
+            "w": "{{m2 - m1 + 1}} [{{(m0[m2-m1])['channelName']}}] {{(m0[m2-m1])['title']}}",
             "p": "-:m1",
             "b": {
                 "0": 5
@@ -21,11 +21,11 @@
         }, {
             "b": [3]
         }, {
-            "w": "请输入编号查看讲了什么",
+            "w": "请输入编号查看文章",
             "r": "r5",
             "p": "spider:https://api.webfollow.cc/api/articles/{{m0[(r5|int)-1].id}}:tojson"
         }, {
-            "w": "{{m5['description']}} \n   <a href='{{m5['link']}}' target='_blank'>查看原文</a> \n",
+            "w": "{{m5['description']}} \n   <a href='{{m5['link']}}' target='_blank'>查看原文</a> \n  ",
             "b": [5]
         }
     ]

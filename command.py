@@ -35,7 +35,7 @@ class Command(cmd.Cmd):
         else:
             self.io.println('\033[31mnot found bootstarap: '+arg+'!\033[0m ')
 
-    def do_server(self, arg):
+    def do_serve(self, arg):
         startserver(self.config, int(env['server_port']))
 
     def do_chat(self, arg):

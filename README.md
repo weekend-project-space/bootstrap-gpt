@@ -38,7 +38,7 @@ python3 ./main.py
 Welcome to Bootstrap GPT
 sample > use summarize
 
-> server
+> serve
 
 HTTP Server running on port 8080
 ```
@@ -56,7 +56,7 @@ res
 {"choices": [{"message": {"role": "assistant", "content": "hello"}]}
 ```
 
-coordination https://github.com/weekend-project-space/chatgpt-online Better eating effect
+coordination [chat-gpt-online](https://weekendproject.space/chat-gpt-online.html) Better eating effect or
 
 ## bootstrap simple
 
