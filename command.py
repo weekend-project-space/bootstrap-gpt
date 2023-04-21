@@ -17,8 +17,8 @@ class Command(cmd.Cmd):
         self.io = IOHolder(self.stdin, self.stdout, Command.prompt)
 
     def preloop(self):
-        self.io.print('\033[34mWelcome to Bootstrap GPT\033[0m\
-                       \n\033[35msample > use summarize\033[0m \n')
+        self.io.print('\n\033[34mBootstrap GPT\033[0m\
+                       \n\033[35msample > use summarize\033[0m \n \n')
 
     def do_ls(self, arg):
         boots = self.config.keys()

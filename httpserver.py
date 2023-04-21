@@ -144,5 +144,11 @@ def startserver(config0, port):
     global config
     config = config0
     server = HTTPServer(('0.0.0.0', port), RequestHandler)
-    print('HTTP Server running on port {}'.format(port))
+    print('\n\033[34mBootStrap-GPT server\033[0m v1.0.0 \n')
+    print('\033[34m➜\033[0m Api: \033[36m\
+http://localhost:{}/v1/chat/completions\033[0m'
+          .format(port))
+    print('\033[34m➜\033[0m Web: \033[36m\
+https://weekendproject.space/chat-gpt-online\033[0m')
+    print('\n')
     server.serve_forever()
