@@ -18,7 +18,7 @@ class Command(cmd.Cmd):
 
     def preloop(self):
         self.io.print('\033[34mWelcome to Bootstrap GPT\033[0m\
-                       \n\033[35msample > use friend\033[0m \n')
+                       \n\033[35msample > use server\033[0m \n')
 
     def do_ls(self, arg):
         boots = self.config.keys()

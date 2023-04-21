@@ -15,7 +15,9 @@
 .env
 
 ```
-api_key=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+api_key=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+api_base=https://chatgpt-api.shn.hk/v1/
+server_port=8080
 ```
 
 ## run
@@ -28,7 +30,20 @@ pip install openai && pip install beautifulsoup4 && pip install jsonpath && pip 
 python3 ./main.py
 ```
 
-## api
+## http server
+
+```
+> python3 ./main.py
+
+Welcome to Bootstrap GPT
+sample > use server
+
+> server
+
+HTTP Server running on port 8080
+```
+
+**api**
 
 ```
 post /v1/chat/completions
@@ -53,6 +68,7 @@ coordination https://github.com/weekend-project-space/chatgpt-online Better eati
     "description": "code boot",
     "boot": [{
             "w": "Hello, this is a code template. Please select template 1. simple 2. demo",
+            "r":"r0",
             "b": {
                 "1": 1,
                 "2": 2
@@ -60,20 +76,24 @@ coordination https://github.com/weekend-project-space/chatgpt-online Better eati
         },
         {
             "w": "Please enter the language type"
+            "r":"r1",
         },
         {
             "w": "Please enter the requirement",
+            "r":"r2",
             "p": "chat:Write a {{r2}} program for {{r1}}"
         }
     ]
 }
 ```
 
--W: write supports template variables
+- w: write supports template variables
 
--B: Branch branch supports object field eq jump and Array sequential execution or no further execution
+- r: read
 
--P: prompt supports template variable micro instructions for guiding chatgt [chat:] to search for plain text or crawler [spider:] output, which can expand more micro instruction prompt guidance
+- b: Branch branch supports object field eq jump and Array sequential execution or no further execution
+
+- p: prompt supports template variable micro instructions for guiding chatgt [chat:] to search for plain text or crawler [spider:] output, which can expand more micro instruction prompt guidance
 
 r2 r1 is a variable with a name of type and an index of r: reader w: writer p: prompts m: msg
 

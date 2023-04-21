@@ -25,7 +25,20 @@ pip install openai && pip install beautifulsoup4 && pip install jsonpath && pip 
 python3 ./main.py
 ```
 
-## api
+## http server
+
+```
+> python3 ./main.py
+
+Welcome to Bootstrap GPT
+sample > use server
+
+> server
+
+HTTP Server running on port 8080
+```
+
+**api**
 
 ```
 post /v1/chat/completions
@@ -42,31 +55,33 @@ res
 
 ## 引导示例
 
+- summarize.json
+
 ```
 {
     "author": "ruidong",
-    "date": "2023-04-17",
+    "date": "2023-04-19",
     "version": "0.1",
-    "description": "code 引导助手",
+    "description": "总结网页",
     "boot": [{
-            "w": "你好 这是一个code模板 请选择模板 1.simple 2.demo",
-            "b": {
-                "1": 1,
-                "2": 2
-            }
-        },
-        {
-            "w": "请输入语言类型"
-        },
-        {
-            "w": "请输入需求",
-            "p": "chat:写一个{{r2}}的{{r1}}程序"
+        "w": "请输入网址",
+        "r": "r0",
+        "p": "spider:{{r0}}:select=article"
+    }, {
+        "p": "chat:总结一下这个页面介绍了什么{{m0}}"
+    }, {
+        "w": "总结: {{m1}} \n还要总结其他网页吗? y/n",
+        "r": "r2",
+        "b": {
+            "y": 0,
+            "n": -1
         }
-    ]
+    }]
 }
 ```
 
 - w: write 支持模板变量
+- r: read 读取输入
 - b: branch 分支 支持 Object 字段 eq 跳转 和 Array 循序执行 或 无继续往下执行
 - p: prompt 支持模板变量 微指令 用于引导 chatgpt[chat:] 给其文案 或 爬虫[sprider:]搜索 纯文本[text:]输出， 可以扩展更多微指令提示引导
 
