@@ -50,7 +50,7 @@ res
 {"choices": [{"message": {"role": "assistant", "content": "hello"}]}
 ```
 
-配合 [chat-gpt-online](https://weekendproject.space/chat-gpt-online.html) 食用效果更佳
+配合 [chat-gpt-online](https://weekendproject.space/chat-gpt-online.html) 食用效果更佳, 注意需要设置一个 api-key(xxx 即可)
 
 ## 引导示例
 
