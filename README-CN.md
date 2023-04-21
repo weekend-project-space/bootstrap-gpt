@@ -28,12 +28,7 @@ python3 ./main.py
 ## http server
 
 ```
-> python3 main.py
-
-Bootstrap GPT
-sample > use summarize
-
-> serve
+> python3 main.py serve
 
 BootStrap-GPT server v1.0.0
 

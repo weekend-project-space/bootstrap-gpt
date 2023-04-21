@@ -2,18 +2,16 @@ import cmd
 from agent import gpt_agent
 from interpreter import handler
 from httpserver import startserver
-from utils.file import readfile
-from utils.parse import parse
-
-env = parse(readfile('.env'))
 
 
 class Command(cmd.Cmd):
     prompt = '\033[34m>\033[0m '
 
-    def __init__(self, config, completekey='tab', stdin=None, stdout=None):
+    def __init__(self, config, severPort, completekey='tab', stdin=None,
+                 stdout=None):
         super().__init__(completekey=completekey, stdin=stdin, stdout=stdout)
         self.config = config
+        self.severPort = severPort
         self.io = IOHolder(self.stdin, self.stdout, Command.prompt)
 
     def preloop(self):
@@ -36,7 +34,7 @@ class Command(cmd.Cmd):
             self.io.println('\033[31mnot found bootstarap: '+arg+'!\033[0m ')
 
     def do_serve(self, arg):
-        startserver(self.config, int(env['server_port']))
+        startserver(self.config, self.severPort)
 
     def do_chat(self, arg):
         self.io.println('chat: {}'.format(gpt_agent(arg)))

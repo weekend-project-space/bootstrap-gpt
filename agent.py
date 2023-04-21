@@ -1,12 +1,10 @@
 import openai
 import requests
 from bs4 import BeautifulSoup
-from utils.file import readfile
-from utils.parse import parse
 from utils.json import to_obj
 from jsonpath import jsonpath
+from env import env
 
-env = parse(readfile('.env'))
 # print(env)
 # 设置 OpenAI API 密钥
 openai.api_key = env['api_key']

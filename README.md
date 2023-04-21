@@ -19,7 +19,7 @@
 ```
 api_key=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 api_base=https://chatgpt-api.shn.hk/v1/
-server_port=8080
+server_port=9981
 ```
 
 ## run
@@ -35,12 +35,7 @@ python3 ./main.py
 ## http server
 
 ```
-> python3 main.py
-
-Bootstrap GPT
-sample > use summarize
-
-> serve
+> python3 main.py serve
 
 
 BootStrap-GPT server v1.0.0
