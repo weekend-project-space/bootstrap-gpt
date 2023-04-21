@@ -75,9 +75,26 @@ def len0(env, key):
 
 def set(env, exp):
     kv = exp.split('=')
-    v = env[kv[1].trim()]
-    env[kv[0].trim()] = v
-    return v
+    k = kv[0].trim()
+    v = kv[1].trim()
+    v = env[v] if v in env else v
+    if k in env:
+        env[k] = v
+        return v
+    else:
+        return None
+
+
+def define(env, exp):
+    kv = exp.split('=')
+    k = kv[0].trim()
+    v = kv[1].trim()
+    v = env[v] if v in env else v
+    if k in env:
+        return None
+    else:
+        env[k] = v
+        return v
 
 
 def agent(content, env, prompt):
@@ -95,6 +112,8 @@ def agent(content, env, prompt):
         return increase(env, promp)
     elif agentName == 'set!':
         return set(env, promp)
+    elif agentName == 'define':
+        return define(env, promp)
     elif agentName == 'len':
         return len0(env, promp)
     else:

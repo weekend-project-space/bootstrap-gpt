@@ -33,7 +33,10 @@ def handler(boot, io=None, index=0, input='', collect={}, skipWR=False,
         else:
             collect['r'+str(index)] = input
     else:
-        collect['r'+str(index)] = input
+        if read:
+            collect[read] = input
+        else:    
+            collect['r'+str(index)] = input
 
     if prompt:
         content = render(prompt, collect)

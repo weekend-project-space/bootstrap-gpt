@@ -93,7 +93,8 @@ def interpreter(msg, env):
         if 'exit' in env.env:
             bootName = env.bootName
             restEnv()
-            return 'bye ' + bootName + '!'
+            writer.println('bye ' + bootName + '!')
+            return writer.content
         else:
             return writer.content
     elif env.bootName in config:
@@ -104,7 +105,8 @@ def interpreter(msg, env):
         if 'exit' in env.env:
             bootName = env.bootName
             restEnv()
-            return 'bye ' + bootName + '!'
+            writer.println('bye ' + bootName + '!')
+            return writer.content
         else:
             return writer.content
     else:
