@@ -1,0 +1,12 @@
+{
+    "author": "ruidong",
+    "date": "2023-05-05",
+    "version": "0.1",
+    "description": "demo",
+    "boot": [{
+        "w": "输入歌曲id",
+        "r": "songid"
+    }, {
+        "w": "<iframe frameborder=no border=0 marginwidth=0 marginheight=0 width=100% height=86 src='//music.163.com/outchain/player?type=2&id={{songid}}&auto=1&height=66'></iframe>"
+    }]
+}
