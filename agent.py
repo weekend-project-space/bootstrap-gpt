@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 from utils.json import to_obj
 from jsonpath import jsonpath
 from env import env
+from utils.parse import parse
+import html2text as ht
 
 # print(env)
 # 设置 OpenAI API 密钥
@@ -13,30 +15,33 @@ openai.api_base = env['api_base']
 
 def spider(query):
     url = query
+    params = {}
+    r = ''
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 \
               (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}
-    if query.find(':select=') > 0:
-        arr = query.split(':select=')
+    if query.find('::'):
+        arr = query.split('::')
         url = arr[0]
-        select = arr[1]
+        params = parse(arr[1], '&')
+    else:
+        pass
+
+    if 'select' in params:
         res = requests.get(url, headers=headers)
         soup = BeautifulSoup(res.text, "html.parser")
-        return soup.select_one(select).get_text()
-    elif query.find(':jsonpath=') > 0:
-        arr = query.split(':jsonpath=')
-        url = arr[0]
-        path = arr[1]
+        r = soup.select_one(params['select']).get_text()
+    elif 'jsonpath' in params:
         res = requests.get(url, headers=headers)
-        return jsonpath(to_obj(res.text), path)
-    elif query.find(':tojson') > 0:
-        arr = query.split(':tojson')
-        url = arr[0]
+        r = jsonpath(to_obj(res.text), params['jsonpath'])
+    elif 'tojson' in params:
         res = requests.get(url, headers=headers)
-        return to_obj(res.text)
+        r = to_obj(res.text)
     else:
         v = requests.get(url, headers=headers)
-        return v.text
+        r = v.text
+
+    return r
 
 
 def gpt_agent(content):
@@ -53,6 +58,21 @@ def gpt_agent(content):
     for choice in response.choices:
         result += choice.message.content
     return result
+
+
+def gpt_agent_stream(content, messages):
+    if len(messages) < 2:
+        messages = [
+            {"role": "user", "content": content},
+        ]
+    # print(content)
+    # 创建 OpenAI GPT 对象
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
+        stream=True
+    )
+    return response
 
 
 def decrease(env, key):
@@ -95,6 +115,13 @@ def define(env, exp):
         return v
 
 
+def html2md(data):
+    text_maker = ht.HTML2Text()
+    text_maker.bypass_tables = False
+    md = text_maker.handle(data)
+    return md
+
+
 def agent(content, env, prompt):
     index = content.find(':')
     agentName = content[:index]
@@ -104,6 +131,8 @@ def agent(content, env, prompt):
         return gpt_agent(promp)
     elif agentName == 'spider':
         return spider(promp)
+    elif agentName == 'html2md':
+        return html2md(promp)
     elif agentName == '-':
         return decrease(env, promp)
     elif agentName == '+':

@@ -5,4 +5,6 @@ def parse(str, splitKey='\n'):
         if '=' in line:
             kv = line.split('=')
             result[kv[0]] = kv[1]
+        else:
+            result[line] = None
     return result

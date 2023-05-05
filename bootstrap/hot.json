@@ -4,7 +4,7 @@
     "version": "0.1",
     "description": "查看webfollow最近热门帖子讲了什么",
     "boot": [{
-            "p": "spider:https://api.webfollow.cc/api/articles?source=EXPLORE&size=20&sort=channel,desc:jsonpath=$.content[*]"
+            "p": "spider:https://api.webfollow.cc/api/articles?source=EXPLORE&size=20&sort=channel,desc::jsonpath=$.content[*]"
         },
         {
             "p": "len:m0"
@@ -23,9 +23,13 @@
         }, {
             "w": "请输入编号查看文章",
             "r": "r5",
-            "p": "spider:https://api.webfollow.cc/api/articles/{{m0[(r5|int)-1].id}}:tojson"
-        }, {
-            "w": "<h1>{{m5['title']}}</h1> \n <small>{{m5['channelName']}}  {{m5['pubDateTime']}}</small>  \n  \n  {{m5['description']}} \n   <a href='{{m5['link']}}' target='_blank'>查看原文</a> \n  ",
+            "p": "spider:https://api.webfollow.cc/api/articles/{{m0[(r5|int)-1].id}}::tojson"
+        },
+        {
+            "p": "html2md:{{m5['description']}}"
+        },
+        {
+            "w": "# {{m5['title']}} \n * {{m5['channelName']}}  {{m5['pubDateTime']}}  \n  \n  {{m6}} \n   [查看原文]({{m5['link']}})\n  ",
             "b": [5]
         }
     ]

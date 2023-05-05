@@ -27,7 +27,7 @@ server_port=9981
 ```
 cd bootstrap-gpt
 
-pip install openai && pip install beautifulsoup4 && pip install jsonpath && pip install jinja2
+pip install openai beautifulsoup4  jsonpath  html2text flask flask-sse
 
 python3 ./main.py
 ```
