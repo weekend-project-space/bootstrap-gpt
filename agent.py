@@ -16,7 +16,6 @@ openai.api_base = env['api_base']
 def spider(query):
     url = query
     params = {}
-    r = ''
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 \
               (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}
@@ -27,21 +26,16 @@ def spider(query):
     else:
         pass
 
+    res = requests.get(url, headers=headers)
     if 'select' in params:
-        res = requests.get(url, headers=headers)
         soup = BeautifulSoup(res.text, "html.parser")
-        r = soup.select_one(params['select']).get_text()
+        return soup.select_one(params['select']).get_text()
     elif 'jsonpath' in params:
-        res = requests.get(url, headers=headers)
-        r = jsonpath(to_obj(res.text), params['jsonpath'])
+        return jsonpath(to_obj(res.text), params['jsonpath'])
     elif 'tojson' in params:
-        res = requests.get(url, headers=headers)
-        r = to_obj(res.text)
+        return to_obj(res.text)
     else:
-        v = requests.get(url, headers=headers)
-        r = v.text
-
-    return r
+        return res.text
 
 
 def gpt_agent(content):

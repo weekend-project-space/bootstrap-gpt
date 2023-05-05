@@ -4,7 +4,9 @@
     "version": "0.1",
     "description": "查看webfollow最近热门帖子讲了什么",
     "boot": [{
-            "p": "spider:https://api.webfollow.cc/api/articles?source=EXPLORE&size=20&sort=channel,desc::jsonpath=$.content[*]"
+            "w": "查看什么主题",
+            "r": "query",
+            "p": "spider:https://api.webfollow.cc/api/articles?source=EXPLORE&query={{query}}&size=20&sort=channel,desc::jsonpath=$.content[*]"
         },
         {
             "p": "len:m0"
