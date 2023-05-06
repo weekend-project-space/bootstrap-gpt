@@ -31,7 +31,7 @@
             "p": "html2md:{{m5['description']}}"
         },
         {
-            "w": "## {{m5['title']}} \n * {{m5['channelName']}}  {{m5['pubDateTime']}}  \n  \n  {{m6}} \n   [查看原文]({{m5['link']}})\n  ",
+            "w": "## {{m5['title']}} \n * {{m5['channelName']}}  {{m5['pubDateTime']}}  \n  \n  {{m6}} \n   <a href='{{m5['link']}}'> 查看原文</a>\n  ",
             "b": [5]
         }
     ]

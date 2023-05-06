@@ -1,0 +1,38 @@
+{
+    "author": "ruidong",
+    "date": "2023-04-19",
+    "version": "0.1",
+    "description": "查看rss信息",
+    "boot": [{
+            "w": "查看什么主题",
+            "r": "query",
+            "p": "spider:https://api.webfollow.cc/api/channels/ids?search={{query}}::tojson"
+        },
+        {
+            "p": "spider:https://api.webfollow.cc/api/channels/articles?size=10&id={{m0[0]}}::jsonpath=$.content[*]"
+        },
+        {
+            "p": "len:m1"
+        },
+        {
+            "p": "len:m1"
+        },
+        {
+            "w": "{{m3 - m2 + 1}} [{{(m1[m3-m2])['channelName']}}] {{(m1[m3-m2])['title']}}",
+            "p": "-:m2",
+            "b": {
+                "0": 6
+            }
+        }, {
+            "b": [4]
+        }, {
+            "w": "请输入编号查看文章",
+            "r": "index",
+            "p": "spider:https://api.webfollow.cc/api/articles/{{m1[(index|int)-1].id}}::tojson"
+        },
+        {
+            "w": "## {{m6['title']}} \n * {{m6['channelName']}}  {{m6['pubDateTime']}}  \n  \n  {{m6['description']}} \n   <a href='{{m6['link']}}'> 查看原文</a>\n  ",
+            "b": [6]
+        }
+    ]
+}
