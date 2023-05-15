@@ -1,8 +1,7 @@
 import sys
-# from command import Command
+from command import Command
 from utils.file import listdir, readfile
-# from httpserver import startserver
-from httpstream3 import starthttp
+from httpstream3 import startserver
 from env import env
 
 
@@ -19,11 +18,9 @@ def loadConfig():
 def main(args):
     severPort = int(env['server_port'])
     if len(args) > 1 and args[1] == 'stream':
-        starthttp(loadConfig(), severPort)
-    # elif len(args) > 1 and args[1] == 'serve':
-    #     startserver(loadConfig(), severPort)
-    # else:
-    #     Command(loadConfig(), severPort).cmdloop()
+        startserver(loadConfig(), severPort)
+    else:
+        Command(loadConfig(), severPort).cmdloop()
 
 
 if __name__ == '__main__':

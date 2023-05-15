@@ -1,0 +1,10 @@
+总结网页
+------
+: summarizelabel
+> 请输入网页 $
+> $ url
+@ spider:{{url}}::select=body art
+@ chat:总结一下{{art}} summarize
+> 总结: {{m1}} \n还要总结其他网页吗? y/n
+> $ yes
+> {{yes}} summarizelabel

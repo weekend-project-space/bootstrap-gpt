@@ -176,10 +176,17 @@ def warp(content, stop=False):
     )
 
 
-def starthttp(config0, port):
+def startserver(config0, port):
     global config
     config = config0
     env = loadFuncs(True)
     global bootwarp
     bootwarp = Bootwarp(None, env=env, io=Writer())
+    print('\n\033[34mBootstrap-GPT server\033[0m v1.0.0 \n')
+    print('\033[34m➜\033[0m Api: \033[36m\
+http://localhost:{}/v1/chat/completions\033[0m'
+          .format(port))
+    print('\033[34m➜\033[0m Web: \033[36m\
+http://localhost:3000\033[0m')
+    print('\n')
     app.run(port=port)

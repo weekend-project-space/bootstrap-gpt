@@ -106,7 +106,7 @@ def handler(bootwarp, input=None, interruptRead=False, r=False):
     if interruptRead and bootwarp.isReadInstr() and not r:
         return True
     else:
-        if bootwarp.isReadInstr():
+        if bootwarp.isReadInstr() and input:
             bootwarp.io.setLine(input)
         else:
             pass

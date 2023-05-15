@@ -1,7 +1,8 @@
 import cmd
 from agent import gpt_agent
-from interpreter import handler
-from httpserver import startserver
+from interpreter3 import Bootwarp, handler
+from httpstream3 import startserver
+from support.fun.function import loadFuncs
 
 
 class Command(cmd.Cmd):
@@ -20,15 +21,17 @@ class Command(cmd.Cmd):
 
     def do_ls(self, arg):
         boots = self.config.keys()
+        print(self.config)
         for b in boots:
-            self.io.print(b)
-            self.io.print(' :  ')
-            self.io.println(self.config[b]['description'])
+            self.io.println('{} :  {} '
+                            .format(b, getBootDesc(self.config, b)))
 
     def do_use(self, arg):
         if arg in self.config:
-            boot = self.config[arg]['boot']
-            handler(boot, self.io)
+            boot = getBoot(self.config, arg)
+            env = loadFuncs()
+            bootwarp = Bootwarp(boot, env=env, io=self.io)
+            handler(bootwarp)
             self.io.println('bye '+arg+'!')
         else:
             self.io.println('\033[31mnot found bootstarap: '+arg+'!\033[0m ')
@@ -42,6 +45,22 @@ class Command(cmd.Cmd):
     def do_exit(self, arg):
         self.io.println('Exiting...')
         return True
+
+
+def getBoot(config, name):
+    lines = config[name].split('\n')
+    if len(lines) > 1 and lines[1] == '------':
+        return lines[2:]
+    else:
+        return lines
+
+
+def getBootDesc(config, name):
+    lines = config[name].split('\n')
+    if len(lines) > 1 and lines[1] == '------':
+        return lines[0]
+    else:
+        return name
 
 
 class IOHolder:
