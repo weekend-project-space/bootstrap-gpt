@@ -34,7 +34,10 @@ def spider(query):
     if 'select' in params:
         soup = BeautifulSoup(res.text, "html.parser")
         t = soup.select(params['select'])
-        return t
+        str = ''
+        for item in t:
+            str += item.get_text()
+        return str
     elif 'jsonpath' in params:
         return jsonpath(to_obj(res.text), params['jsonpath'])
     elif 'tojson' in params:
@@ -76,6 +79,7 @@ def gpt_agent_stream(content, messages):
 
 def gpt_agent_http_stream(content, messages):
     str = _link2text(content)
+    print(str)
     return gpt_agent_stream(str, messages)
 
 
