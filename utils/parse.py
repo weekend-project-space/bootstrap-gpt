@@ -8,3 +8,13 @@ def parse(str, splitKey='\n'):
         else:
             result[line] = None
     return result
+
+
+def parseone(str, splitKey='\n'):
+    i = str.find(splitKey)
+    result = {}
+    if i != -1:
+        result[str[:i]] = str[i+1:]
+    else:
+        result[str] = True
+    return result

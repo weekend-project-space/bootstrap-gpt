@@ -1,6 +1,5 @@
 import sys
-from support.fun.function import loadFuncs
-from utils.file import readfile
+# import logging
 
 
 class Instr:
@@ -22,7 +21,7 @@ class Bootwarp:
         self.env = env
         self.io = io
 
-    def read(self) -> Instr:
+    def getInstr(self) -> Instr:
         instr_str = self.boot[self.index].strip()
         left_index = instr_str.find(" ")
         right_index = instr_str.rfind(" ")
@@ -42,6 +41,18 @@ class Bootwarp:
 
     def next(self):
         self.index += 1
+
+    def isReadInstr(self):
+        instr = self.getInstr()
+        if instr.key == '<':
+            return True
+        elif instr.key == '>' and instr.args == '$':
+            return True
+        else:
+            return False
+
+    def hasBoot(self):
+        return True if self.boot else False
 
 
 class IOHolder:
@@ -66,15 +77,23 @@ class IOHolder:
         self.stdout.flush()
 
     def readline(self):
-        line = self.stdin.readline()
-        if not len(line):
-            line = 'EOF'
+        if self.line:
+            line = self.line
+            self.line = None
+            return line
         else:
-            line = line.rstrip('\r\n')
-        return line
+            line = self.stdin.readline()
+            if not len(line):
+                line = 'EOF'
+            else:
+                line = line.rstrip('\r\n')
+            return line
+
+    def setLine(self, str):
+        self.line = str
 
 
-def inter(bootwarp, instr):
+def inter0(bootwarp, instr):
     func = bootwarp.env[instr.key]
     if func:
         func(bootwarp, instr)
@@ -82,17 +101,24 @@ def inter(bootwarp, instr):
         bootwarp.io.println('error: undefind '+instr.key)
 
 
-def handler(bootwarp, interruptRead=False):
-    instr = bootwarp.read()
-    # print(instr)
-    inter(bootwarp, instr)
-    if bootwarp.hasNext():
-        bootwarp.next()
-        handler(bootwarp)
-    pass
+def handler(bootwarp, input=None, interruptRead=False, r=False):
+    # logging.info(input, bootwarp.index)
+    if interruptRead and bootwarp.isReadInstr() and not r:
+        return True
+    else:
+        if bootwarp.isReadInstr():
+            bootwarp.io.setLine(input)
+        else:
+            pass
+        instr = bootwarp.getInstr()
+        inter0(bootwarp, instr)
+        if bootwarp.hasNext():
+            bootwarp.next()
+            handler(bootwarp, input, interruptRead)
+        pass
 
 
-if __name__ == '__main__':
-    env = loadFuncs()
-    boot = readfile('./demo.bs').split('\n')
-    handler(Bootwarp(boot, env=env, io=IOHolder()))
+# if __name__ == '__main__':
+#     env = loadFuncs()
+#     boot = readfile('./demo.bs').split('\n')
+#     handler(Bootwarp(boot, env=env, io=IOHolder()))

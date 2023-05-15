@@ -1,0 +1,9 @@
+> c $
+< c $
+> hello world{{c}} c 
+^ c 12/:t/c
+: t $
+@ chat:xxxxxxx{{}}  c
+@ spidr:xxxxxxx  c
+@ len:xxx  c 
+@ +:[1,2,3] c

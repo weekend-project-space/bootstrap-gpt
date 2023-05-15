@@ -1,0 +1,21 @@
+{
+    "author": "ruidong",
+    "date": "2023-04-17",
+    "version": "0.1",
+    "description": "amazon review 助手",
+    "boot": [{
+        "w": "请输入商品评论链接",
+        "r": "r0",
+        "p": "spider:{{r0}}::select=[data-hook=review-body]"
+    }, {
+        "w": "{{m0}} 是否查看总结y/n",
+        "r": "r1",
+        "b": {
+            "n": -1
+        }
+    }, {
+        "p": "chat:用中文分析一下客户反馈最多的问题？并给出占比:{{m0}}"
+    }, {
+        "w": "总结：{{m2}}"
+    }]
+}

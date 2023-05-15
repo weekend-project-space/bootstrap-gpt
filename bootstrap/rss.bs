@@ -1,0 +1,18 @@
+查看rss信息
+------
+> 查看什么主题 $
+> $ query
+@ spider:https://api.webfollow.cc/api/channels/ids?search={{query}}::tojson m0
+@ spider:https://api.webfollow.cc/api/channels/articles?size=10&id={{m0[0]}}::jsonpath=$.content[*] m1
+@ len:m1 m2
+@ len:m1 m3
+: artslabel
+> {{m3 - m2 + 1}} [{{(m1[m3-m2])['channelName']}}] {{(m1[m3-m2])['title']}} $
+@ -:m2 m2
+^ {{m2}} artslabel
+: look
+> 请输入编号查看文章 $
+> $ index
+@ spider:https://api.webfollow.cc/api/articles/{{m1[(index|int)-1].id}}::tojson m6
+> ## {{m6['title']}} \n * {{m6['channelName']}}  {{m6['pubDateTime']}}  \n  \n <audio controls>   <source src={{m6['enclosure']}} type='audio/mpeg'></audio> {{m6['description']}} \n   <a href='{{m6['link']}}'> 查看原文</a>\n   $
+^ 1 look

@@ -1,10 +1,11 @@
+import logging
 import openai
 import requests
 from bs4 import BeautifulSoup
 from utils.json import to_obj
 from jsonpath import jsonpath
 from env import env
-from utils.parse import parse
+from utils.parse import parseone
 import html2text as ht
 
 # print(env)
@@ -18,18 +19,21 @@ def spider(query):
     params = {}
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 \
-              (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}
+              (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+        'cookie': 'session-id=138-0644453-6275916; i18n-prefs=USD; sp-cdn="L5Z9:HK"; ubid-main=130-6986158-5946839; lc-main=en_US; session-token="li6hr/FTfjgE1a8nr6b1Z+kN4JWGJto4r+bsr6Adi5lO/9KbFyuZRJlpxS7saJctez9NOAxGElxb/IgS9D2TMhRWWNo4MUYGZov65y0sMSqLI4xKj2F8FGjHLlpYSna1rGBUfOz37tOhbF9j6LmxAHbe4AyOdblweKsPP6XHbDZuPVW3F/OK6NPmUIeq5dl1Lo5PmhHQYW0zYJaflPhpqkyUni/5HQTm543C+B+7LG0="; session-id-time=2082787201l; csm-hit=tb:s-SFFN9CRT3AD16RZ86ZZD|1683878824743&t:1683878824918&adb:adblk_yes'}
+
     if query.find('::') > 0:
         arr = query.split('::')
         url = arr[0]
-        params = parse(arr[1], '&')
+        params = parseone(arr[1], '=')
     else:
         pass
-
     res = requests.get(url, headers=headers)
+    logging.debug(query, params, url, res.text)
     if 'select' in params:
         soup = BeautifulSoup(res.text, "html.parser")
-        return soup.select_one(params['select']).get_text()
+        t = soup.select(params['select'])
+        return t
     elif 'jsonpath' in params:
         return jsonpath(to_obj(res.text), params['jsonpath'])
     elif 'tojson' in params:
@@ -85,6 +89,13 @@ def len0(env, key):
     return len(env[key])
 
 
+def textlen0(data):
+    if data == 'None':
+        return 0
+    else:
+        return len(data)
+
+
 def set(env, exp):
     kv = exp.split('=')
     k = kv[0].trim()
@@ -119,7 +130,8 @@ def html2md(data):
 def agent(content, env, prompt):
     index = content.find(':')
     agentName = content[:index]
-    promp = content[index+1:]
+    promp = content[index+1:].strip()
+    # print(promp)
     # print(str(index)+agentName+'---' + promt)
     if agentName == 'chat':
         return gpt_agent(promp)
@@ -137,5 +149,7 @@ def agent(content, env, prompt):
         return define(env, promp)
     elif agentName == 'len':
         return len0(env, promp)
+    elif agentName == 'text-len':
+        return textlen0(promp)
     else:
         return promp

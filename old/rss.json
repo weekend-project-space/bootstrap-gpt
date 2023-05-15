@@ -31,6 +31,16 @@
             "p": "spider:https://api.webfollow.cc/api/articles/{{m1[(index|int)-1].id}}::tojson"
         },
         {
+            "p": "text-len:{{m6['enclosure']}}",
+            "b": {
+                "0": 9
+            }
+        },
+        {
+            "w": "## {{m6['title']}} \n * {{m6['channelName']}}  {{m6['pubDateTime']}}  \n  \n <audio controls>   <source src={{m6['enclosure']}} type='audio/mpeg'></audio> {{m6['description']}} \n   <a href='{{m6['link']}}'> 查看原文</a>\n  ",
+            "b": [6]
+        },
+        {
             "w": "## {{m6['title']}} \n * {{m6['channelName']}}  {{m6['pubDateTime']}}  \n  \n  {{m6['description']}} \n   <a href='{{m6['link']}}'> 查看原文</a>\n  ",
             "b": [6]
         }

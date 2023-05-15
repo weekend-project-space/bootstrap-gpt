@@ -2,7 +2,6 @@
 ------
 > 你好世界 $
 > $ $
-< c $
 : label1
 > $ c
 > hello world-{{c}} d
