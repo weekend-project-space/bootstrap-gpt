@@ -17,12 +17,24 @@ class Bootwarp:
 
     def __init__(self, boot, index=0, env={}, io=None) -> None:
         self.boot = boot
-        self.index = index
+        self.index = 0
         self.env = env
         self.io = io
+        self.initLable()
+        self.index = index
+
+    def initLable(self):
+        if self.boot:
+            for i in range(len(self.boot)):
+                instr = Bootwarp.getInstr0(self.boot, i)
+                if instr.key == ':':
+                    self.env[instr.args] = i
 
     def getInstr(self) -> Instr:
-        instr_str = self.boot[self.index].strip()
+        return Bootwarp.getInstr0(self.boot, self.index)
+
+    def getInstr0(boot, index) -> Instr:
+        instr_str = boot[index].strip()
         left_index = instr_str.find(" ")
         right_index = instr_str.rfind(" ")
         key = instr_str[0:left_index]
@@ -33,11 +45,17 @@ class Bootwarp:
             target = instr_str[right_index+1:]
         return Instr(key, args, target)
 
+    def setBoot(self, boot):
+        self.boot = boot
+        self.index = 0
+        self.initLable()
+        self.index = 0
+
     def setIndex(self, index=0):
         self.index = index
 
     def hasNext(self) -> bool:
-        return len(self.boot)-1 > self.index and self.index > -1
+        return self.boot and len(self.boot)-1 > self.index and self.index > -1
 
     def next(self):
         self.index += 1

@@ -6,6 +6,7 @@ from interpreter3 import Bootwarp, IOHolder, handler
 from support.fun.function import loadFuncs
 import logging
 
+
 class Env:
     def __init__(self, bootName, env, index) -> None:
         self.bootName = bootName
@@ -79,7 +80,7 @@ def interpreter(msg, messages=[]):
         return res
     elif msg in config:
         restEnv()
-        bootwarp.boot = getBoot(msg)
+        bootwarp.setBoot(getBoot(msg))
         handler(bootwarp, input=msg, interruptRead=True, r=True)
         writer = bootwarp.io
         if not bootwarp.hasNext():

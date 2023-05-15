@@ -26,7 +26,7 @@ def read(bootwarp, instr, interruptRead=False):
 
 
 def jump(bootwarp, instr):
-    flag = render(instr.args, bootwarp.env)
+    flag = render(instr.args, bootwarp.env).strip()
     if flag != 0 and flag != '0' and flag:
         label = render(instr.target, bootwarp.env)
         if isinstance(label, str):
@@ -40,7 +40,9 @@ def jump(bootwarp, instr):
 
 
 def label(bootwarp, instr):
-    bootwarp.env[instr.args] = bootwarp.index
+    # bootwarp.env[instr.args] = bootwarp.index
+    # print(instr.args, bootwarp.index)
+    pass
 
 
 def call(bootwarp, instr):
