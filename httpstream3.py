@@ -1,7 +1,7 @@
 import json
 import time
 from flask import Flask, Response, request
-from agent import gpt_agent_stream
+from agent import gpt_agent_http_stream
 from interpreter3 import Bootwarp, IOHolder, handler
 from support.fun.function import loadFuncs
 import logging
@@ -99,7 +99,7 @@ def interpreter(msg, messages=[]):
         else:
             return writer.content
     else:
-        return gpt_agent_stream(msg, messages)
+        return gpt_agent_http_stream(msg, messages)
 
 
 def restEnv():

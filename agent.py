@@ -1,3 +1,4 @@
+import json
 import logging
 import openai
 import requests
@@ -29,7 +30,7 @@ def spider(query):
     else:
         pass
     res = requests.get(url, headers=headers)
-    logging.debug(query, params, url, res.text)
+    # print(query, params, url)
     if 'select' in params:
         soup = BeautifulSoup(res.text, "html.parser")
         t = soup.select(params['select'])
@@ -71,6 +72,25 @@ def gpt_agent_stream(content, messages):
         stream=True
     )
     return response
+
+
+def gpt_agent_http_stream(content, messages):
+    str = _link2text(content)
+    return gpt_agent_stream(str, messages)
+
+
+def _link2text(content):
+    if content.find('http') > -1:
+        link_str = gpt_agent('"{}" {}'.format(content, '这段文字中的链接是什么返回给我一个数组'))
+        if link_str.find('[') > -1:
+            left = link_str.find('[')
+            right = link_str.find(']')
+            link_str = link_str[left:right+1]
+            links = json.loads(link_str)
+            for link in links:
+                text = spider('{}::select=.comment-content'.format(link))
+                content = content.replace(link, '{}'.format(text))
+    return content
 
 
 def decrease(env, key):
