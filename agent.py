@@ -88,7 +88,7 @@ def _link2text(content):
             link_str = link_str[left:right+1]
             links = json.loads(link_str)
             for link in links:
-                text = spider('{}::select=.comment-content'.format(link))
+                text = spider('{}::select=body'.format(link))
                 content = content.replace(link, '{}'.format(text))
     return content
 
