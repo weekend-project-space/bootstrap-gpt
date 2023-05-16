@@ -84,7 +84,7 @@ def gpt_agent_stream(content, messages):
 
 def gpt_agent_http_stream(content, messages):
     str = _link2text(content)
-    print(str)
+    # print(str)
     return gpt_agent_stream(str, messages)
 
 
