@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 import openai
 import requests
 from bs4 import BeautifulSoup
@@ -9,6 +10,8 @@ from env import env
 from utils.parse import parseone
 import html2text as ht
 
+reg = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F]'\
+    + '[0-9a-fA-F]))+'
 # print(env)
 # 设置 OpenAI API 密钥
 openai.api_key = env['api_key']
@@ -67,6 +70,8 @@ def gpt_agent_stream(content, messages):
         messages = [
             {"role": "user", "content": content},
         ]
+    if len(messages) > 1:
+        messages[len(messages)-1]['content'] = content
     # print(content)
     # 创建 OpenAI GPT 对象
     response = openai.ChatCompletion.create(
@@ -84,16 +89,10 @@ def gpt_agent_http_stream(content, messages):
 
 
 def _link2text(content):
-    if content.find('http') > -1:
-        link_str = gpt_agent('"{}" {}'.format(content, '这段文字中的链接是什么返回给我一个数组'))
-        if link_str.find('[') > -1:
-            left = link_str.find('[')
-            right = link_str.find(']')
-            link_str = link_str[left:right+1]
-            links = json.loads(link_str)
-            for link in links:
-                text = spider('{}::select=body'.format(link))
-                content = content.replace(link, '{}'.format(text))
+    links = re.findall(reg, content)
+    for link in links:
+        text = spider('{}::select=body'.format(link)).strip()
+        content = content.replace(link, '{}'.format(text))
     return content
 
 

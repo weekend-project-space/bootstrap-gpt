@@ -17,7 +17,7 @@ def loadConfig():
 
 def main(args):
     severPort = int(env['server_port'])
-    if len(args) > 1 and args[1] == 'stream':
+    if len(args) > 1 and args[1] == 'serve':
         startserver(loadConfig(), severPort)
     else:
         Command(loadConfig(), severPort).cmdloop()
