@@ -70,7 +70,7 @@ coordination [chat-gpt-online](https://weekendproject.space/chat-gpt-online.html
 > $ url
 @ spider:{{url}}::select=body art
 @ chat:总结一下{{art}} summarize
-> 总结: {{m1}} \n还要总结其他网页吗? y/n
+> 总结: {{summarize}} \n还要总结其他网页吗? y/n
 > $ yes
 ^ {{yes}} summarizelabel
 ```
