@@ -1,18 +1,16 @@
 # bootstrap-gpt
 
-> Guide GPT to help you efficiently complete various tasks, write GPT prompts programs, and automate GPT prompts, support web api
+> 引导 GPT 帮助您高效地完成各种任务，gpt-plugin, 可联网，总结网页，突破字数限制，支持 prompt 编排，可自动化, 支持 web api
 
-![bootstrap-gpt](./doc/gpt-online-demo.gif)
-
-![bootstrap-gpt](./doc/screen.png)
+![bootstrap-gpt](./doc/chat-gpt-simple.gif)
 
 ## translate
 
 [中文](./README-CN.md)
 
-## download
+## 下载
 
-## set api key
+## 设置 api key
 
 .env
 
@@ -22,7 +20,7 @@ api_base=https://chatgpt-api.shn.hk/v1/
 server_port=9981
 ```
 
-## run
+## 运行
 
 ```
 cd bootstrap-gpt
@@ -62,43 +60,29 @@ coordination [chat-gpt-online](https://weekendproject.space/chat-gpt-online.html
 
 > Note that you need to set an api-key (xxx is enough)
 
-## bootstrap simple
+## bootstrap 示例
 
 ```
-{
-    "author": "ruidong",
-    "date": "2023-04-17",
-    "version": "0.1",
-    "description": "code boot",
-    "boot": [{
-            "w": "Hello, this is a code template. Please select template 1. simple 2. demo",
-            "r":"r0",
-            "b": {
-                "1": 1,
-                "2": 2
-            }
-        },
-        {
-            "w": "Please enter the language type"
-            "r":"r1",
-        },
-        {
-            "w": "Please enter the requirement",
-            "r":"r2",
-            "p": "chat:Write a {{r2}} program for {{r1}}"
-        }
-    ]
-}
+总结网页
+------
+: summarizelabel
+> 请输入网页 $
+> $ url
+@ spider:{{url}}::select=body art
+@ chat:总结一下{{art}} summarize
+> 总结: {{m1}} \n还要总结其他网页吗? y/n
+> $ yes
+^ {{yes}} summarizelabel
 ```
 
-- w: write supports template variables
+- . : 标签
 
-- r: read
+- . > 移动/打印
 
-- b: Branch branch supports object field eq jump and Array sequential execution or no further execution
+- . < 读取
 
-- p: prompt supports template variable micro instructions for guiding chatgt [chat:] to search for plain text or crawler [spider:] output, which can expand more micro instruction prompt guidance
+- . @ 调用自定义过程 spider,chat,len,-,text-len
 
-r2 r1 is a variable with a name of type and an index of r: reader w: writer p: prompts m: msg
+- . ^ 分支跳转 跳转标签或数字所在行
 
-Generate Rule Reference [interpreter.py](./interpreter.py)
+解释器[interpreter3.py](./interpreter3.py)
