@@ -24,7 +24,7 @@ def spider(query):
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 \
               (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
-        'cookie': 'session-id=138-0644453-6275916; i18n-prefs=USD; sp-cdn="L5Z9:HK"; ubid-main=130-6986158-5946839; lc-main=en_US; session-token="li6hr/FTfjgE1a8nr6b1Z+kN4JWGJto4r+bsr6Adi5lO/9KbFyuZRJlpxS7saJctez9NOAxGElxb/IgS9D2TMhRWWNo4MUYGZov65y0sMSqLI4xKj2F8FGjHLlpYSna1rGBUfOz37tOhbF9j6LmxAHbe4AyOdblweKsPP6XHbDZuPVW3F/OK6NPmUIeq5dl1Lo5PmhHQYW0zYJaflPhpqkyUni/5HQTm543C+B+7LG0="; session-id-time=2082787201l; csm-hit=tb:s-SFFN9CRT3AD16RZ86ZZD|1683878824743&t:1683878824918&adb:adblk_yes'}
+        }
 
     if query.find('::') > 0:
         arr = query.split('::')
@@ -33,7 +33,8 @@ def spider(query):
     else:
         pass
     res = requests.get(url, headers=headers)
-    # print(query, params, url)
+    res.encoding = res.apparent_encoding
+    # print(query, params, res.text)
     if 'select' in params:
         soup = BeautifulSoup(res.text, "html.parser")
         t = soup.select(params['select'])
@@ -85,6 +86,7 @@ def gpt_agent_stream(content, messages):
 def gpt_agent_http_stream(content, messages):
     str = _link2text(content)
     # print(str)
+    # return str
     return gpt_agent_stream(str, messages)
 
 
@@ -92,7 +94,7 @@ def _link2text(content):
     links = re.findall(reg, content)
     for link in links:
         text = spider('{}::select=body'.format(link)).strip()
-        content = content.replace(link, '{}'.format(text))
+        content = content.replace(link, '{}'.format(re.sub('\n+', ' ', text)))
     return content
 
 
