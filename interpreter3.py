@@ -134,9 +134,3 @@ def handler(bootwarp, input=None, interruptRead=False, r=False):
             bootwarp.next()
             handler(bootwarp, input, interruptRead)
         pass
-
-
-# if __name__ == '__main__':
-#     env = loadFuncs()
-#     boot = readfile('./demo.bs').split('\n')
-#     handler(Bootwarp(boot, env=env, io=IOHolder()))
